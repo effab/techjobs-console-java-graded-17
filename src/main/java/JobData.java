@@ -22,7 +22,7 @@ public class JobData {
      * without duplicates, for a given column.
      *
      * @param field The column to retrieve values from
-     * @return List of all of the values of the given field
+     * @return List of all the values of the given field
      */
     public static ArrayList<String> findAll(String field) {
 
@@ -38,6 +38,8 @@ public class JobData {
                 values.add(aValue);
             }
         }
+
+        Collections.sort(values);
 
         return values;
     }
@@ -96,13 +98,10 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) {
-            for (Map.Entry<String, String> column : row.entrySet()) {
-                String a = column.getKey();
-                String b = column.getKey();
-
-                if (a.toLowerCase().contains(value) || b.toLowerCase().contains(value)){
-                    jobs.add(row);
+        for (HashMap<String, String> job : JobData.findAll()) {
+            for (String key : job.keySet()) {
+                if (job.get(key).toUpperCase().contains(value.toLowerCase())) {
+                   jobs.add(job);
                 }
             }
         }
